@@ -19,6 +19,7 @@ public class FlappyBird extends Game {
 	}
 	
 	public void dispose () {
+		super.dispose();
 		batch.dispose();
 	}
 }
