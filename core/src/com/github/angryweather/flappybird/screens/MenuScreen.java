@@ -1,6 +1,8 @@
-package com.github.angryweather.flappybird;
+package com.github.angryweather.flappybird.screens;
 
 import com.badlogic.gdx.Screen;
+import com.github.angryweather.flappybird.Background;
+import com.github.angryweather.flappybird.FlappyBird;
 
 public class MenuScreen implements Screen {
     final FlappyBird game;

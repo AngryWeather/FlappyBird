@@ -2,10 +2,11 @@ package com.github.angryweather.flappybird;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.github.angryweather.flappybird.screens.MenuScreen;
 
 public class FlappyBird extends Game {
-	SpriteBatch batch;
-	Manager manager = new Manager();
+	public SpriteBatch batch;
+	public Manager manager = new Manager();
 
 	public void create () {
 		batch = new SpriteBatch();
