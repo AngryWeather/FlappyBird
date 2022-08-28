@@ -11,8 +11,7 @@ public class Manager {
     }
 
     public void loadMenu() {
-        System.out.println("loading");
-        assets.load("assets/background.png", Texture.class);
+        assets.load(Background.BACKGROUND_IMAGE, Texture.class);
     }
 
 

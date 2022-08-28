@@ -20,35 +20,28 @@ public class MenuScreen implements Screen {
         this.game = game;
         camera = new OrthographicCamera(FlappyBird.width, FlappyBird.height);
         viewport = new StretchViewport(FlappyBird.width, FlappyBird.height, camera);
-        System.out.println("Menu!");
     }
 
 
     @Override
     public void show() {
-        game.manager.loadMenu();
+        game.manager.assets.finishLoading();
+        background = game.manager.assets.get("assets/background.png", Texture.class);
+        System.out.println(game.manager.assets.getReferenceCount("assets/background.png"));
     }
 
     @Override
     public void render(float delta) {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
-        if (game.manager.assets.update()) {
-            background = game.manager.assets.get("assets/background.png", Texture.class);
-            game.batch.begin();
-            game.batch.draw(background, 0, 0);
-            game.batch.end();
-        }
-
-
-
+        game.batch.begin();
+        game.batch.draw(background, 0, 0);
+        game.batch.end();
     }
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
-        camera.update();
-
     }
 
     @Override
@@ -63,12 +56,11 @@ public class MenuScreen implements Screen {
 
     @Override
     public void hide() {
-        System.out.println("dispose: ");
         dispose();
     }
 
     @Override
     public void dispose() {
-
+        game.manager.assets.clear();
     }
 }
