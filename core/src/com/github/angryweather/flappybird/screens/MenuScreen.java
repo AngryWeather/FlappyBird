@@ -18,8 +18,8 @@ public class MenuScreen implements Screen {
 
     public MenuScreen(final FlappyBird game) {
         this.game = game;
-        camera = new OrthographicCamera(FlappyBird.width, FlappyBird.height);
-        viewport = new StretchViewport(FlappyBird.width, FlappyBird.height, camera);
+        camera = new OrthographicCamera(FlappyBird.WIDTH, FlappyBird.HEIGHT);
+        viewport = new StretchViewport(FlappyBird.WIDTH, FlappyBird.HEIGHT, camera);
     }
 
 
@@ -58,7 +58,6 @@ public class MenuScreen implements Screen {
     @Override
     public void hide() {
         dispose();
-        System.out.println(5 * 5);
     }
 
     @Override

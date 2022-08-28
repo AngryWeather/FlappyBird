@@ -8,8 +8,8 @@ import com.github.angryweather.flappybird.entities.Ground;
 import com.github.angryweather.flappybird.screens.MenuScreen;
 
 public class FlappyBird extends Game {
-	public static int width = 1157;
-	public static int height = 288;
+	public static final int WIDTH = 1100;
+	public static final int HEIGHT = 288;
 	public SpriteBatch batch;
 	public Manager manager = new Manager();
 
