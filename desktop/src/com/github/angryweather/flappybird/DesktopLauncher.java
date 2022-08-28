@@ -10,6 +10,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setTitle("FlappyBird");
+		config.setWindowedMode(1157, 288);
 		new Lwjgl3Application(new FlappyBird(), config);
 	}
 }
