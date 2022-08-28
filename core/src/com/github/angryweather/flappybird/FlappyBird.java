@@ -3,6 +3,8 @@ package com.github.angryweather.flappybird;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.github.angryweather.flappybird.entities.Background;
+import com.github.angryweather.flappybird.entities.Ground;
 import com.github.angryweather.flappybird.screens.MenuScreen;
 
 public class FlappyBird extends Game {
@@ -15,6 +17,8 @@ public class FlappyBird extends Game {
 		batch = new SpriteBatch();
 		// the background and the ground used in all screens
 		manager.assets.load(Background.BACKGROUND_IMAGE, Texture.class);
+		manager.assets.load(Ground.GROUND_IMAGE, Texture.class);
+
 		this.setScreen(new MenuScreen(this));
 
 	}
