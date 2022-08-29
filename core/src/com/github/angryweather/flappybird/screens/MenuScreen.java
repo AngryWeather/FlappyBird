@@ -35,7 +35,11 @@ public class MenuScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
-        game.batch.draw(background, 0, 0);
+        game.batch.draw(background, -Background.backgroundScroll, 0);
+
+        // update backgroundScroll
+        Background.updateBackgroundScroll(delta);
+
         game.batch.draw(ground, 0, 0);
         game.batch.end();
     }
