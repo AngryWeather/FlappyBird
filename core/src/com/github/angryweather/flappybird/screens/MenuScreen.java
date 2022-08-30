@@ -53,12 +53,11 @@ public class MenuScreen implements Screen {
         Ground.updateGroundScroll(delta);
         flappyFont.draw(game.batch, flappy, flappyFontCenterX, flappyFontY);
         flappyFont.draw(game.batch, pressEnter, flappyFontCenterX - 25, FlappyBird.HEIGHT - 60);
+        game.batch.end();
 
         if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
             game.setScreen(new GameScreen(game));
         }
-
-        game.batch.end();
     }
 
     @Override
@@ -85,7 +84,6 @@ public class MenuScreen implements Screen {
     @Override
     public void dispose() {
         System.out.println("dispose");
-        game.manager.assets.clear();
         flappyFont.dispose();
     }
 }
