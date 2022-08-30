@@ -21,6 +21,7 @@ public class MenuScreen implements Screen {
     float flappyFontY = FlappyBird.HEIGHT - 30;
     BitmapFont flappyFont = new BitmapFont();
     GlyphLayout flappy = new GlyphLayout();
+    GlyphLayout pressEnter = new GlyphLayout();
 
 
     public MenuScreen(final FlappyBird game) {
@@ -28,6 +29,7 @@ public class MenuScreen implements Screen {
         camera = new OrthographicCamera(FlappyBird.WIDTH, FlappyBird.HEIGHT);
         viewport = new StretchViewport(FlappyBird.WIDTH, FlappyBird.HEIGHT, camera);
         flappy.setText(flappyFont, "Flappy Bird");
+        pressEnter.setText(flappyFont, "Press Enter to start");
     }
 
 
@@ -49,6 +51,7 @@ public class MenuScreen implements Screen {
         game.batch.draw(ground, -Ground.groundScroll, 0);
         Ground.updateGroundScroll(delta);
         flappyFont.draw(game.batch, flappy, flappyFontCenterX, flappyFontY);
+        flappyFont.draw(game.batch, pressEnter, flappyFontCenterX - 25, FlappyBird.HEIGHT - 60);
 
         game.batch.end();
     }
