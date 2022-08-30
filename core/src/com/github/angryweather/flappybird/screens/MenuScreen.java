@@ -3,6 +3,8 @@ package com.github.angryweather.flappybird.screens;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.github.angryweather.flappybird.FlappyBird;
@@ -15,11 +17,17 @@ public class MenuScreen implements Screen {
     final FlappyBird game;
     Texture background;
     Texture ground;
+    float flappyFontCenterX = FlappyBird.WIDTH / 2f - 30;
+    float flappyFontY = FlappyBird.HEIGHT - 30;
+    BitmapFont flappyFont = new BitmapFont();
+    GlyphLayout flappy = new GlyphLayout();
+
 
     public MenuScreen(final FlappyBird game) {
         this.game = game;
         camera = new OrthographicCamera(FlappyBird.WIDTH, FlappyBird.HEIGHT);
         viewport = new StretchViewport(FlappyBird.WIDTH, FlappyBird.HEIGHT, camera);
+        flappy.setText(flappyFont, "Flappy Bird");
     }
 
 
@@ -40,6 +48,7 @@ public class MenuScreen implements Screen {
 
         game.batch.draw(ground, -Ground.groundScroll, 0);
         Ground.updateGroundScroll(delta);
+        flappyFont.draw(game.batch, flappy, flappyFontCenterX, flappyFontY);
 
         game.batch.end();
     }
@@ -67,5 +76,6 @@ public class MenuScreen implements Screen {
     @Override
     public void dispose() {
         game.manager.assets.clear();
+        flappyFont.dispose();
     }
 }

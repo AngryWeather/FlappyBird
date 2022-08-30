@@ -10,6 +10,4 @@ public class Background {
         Background.backgroundScroll = (Background.backgroundScroll + Background.BACKGROUND_SPEED * delta)
                 % Background.BACKGROUND_LOOPING_POINT;
     }
-
-
 }

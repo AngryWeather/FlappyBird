@@ -8,5 +8,4 @@ public class Manager {
     public Manager() {
         assets = new AssetManager();
     }
-
 }
