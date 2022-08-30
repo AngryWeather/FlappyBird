@@ -1,5 +1,7 @@
 package com.github.angryweather.flappybird.screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -22,7 +24,6 @@ public class MenuScreen implements Screen {
     BitmapFont flappyFont = new BitmapFont();
     GlyphLayout flappy = new GlyphLayout();
     GlyphLayout pressEnter = new GlyphLayout();
-
 
     public MenuScreen(final FlappyBird game) {
         this.game = game;
@@ -53,6 +54,10 @@ public class MenuScreen implements Screen {
         flappyFont.draw(game.batch, flappy, flappyFontCenterX, flappyFontY);
         flappyFont.draw(game.batch, pressEnter, flappyFontCenterX - 25, FlappyBird.HEIGHT - 60);
 
+        if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+            game.setScreen(new GameScreen(game));
+        }
+
         game.batch.end();
     }
 
@@ -73,11 +78,13 @@ public class MenuScreen implements Screen {
 
     @Override
     public void hide() {
+        System.out.println("hide");
         dispose();
     }
 
     @Override
     public void dispose() {
+        System.out.println("dispose");
         game.manager.assets.clear();
         flappyFont.dispose();
     }
