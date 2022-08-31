@@ -2,6 +2,7 @@ package com.github.angryweather.flappybird.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -39,6 +40,18 @@ public class MenuScreen implements Screen {
         game.manager.assets.finishLoading();
         background = game.manager.assets.get(Background.BACKGROUND_IMAGE, Texture.class);
         ground = game.manager.assets.get(Ground.GROUND_IMAGE, Texture.class);
+
+        Gdx.input.setInputProcessor(new InputAdapter() {
+            @Override
+            public boolean keyDown(int key) {
+                switch (key) {
+                    case Input.Keys.ENTER:
+                        game.setScreen(new GameScreen(game));
+                        break;
+                }
+            return true;
+            }
+        });
     }
 
     @Override
@@ -55,9 +68,9 @@ public class MenuScreen implements Screen {
         flappyFont.draw(game.batch, pressEnter, flappyFontCenterX - 25, FlappyBird.HEIGHT - 60);
         game.batch.end();
 
-        if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
-            game.setScreen(new GameScreen(game));
-        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+//            game.setScreen(new GameScreen(game));
+//        }
     }
 
     @Override
@@ -77,13 +90,11 @@ public class MenuScreen implements Screen {
 
     @Override
     public void hide() {
-        System.out.println("hide");
         dispose();
     }
 
     @Override
     public void dispose() {
-        System.out.println("dispose");
         flappyFont.dispose();
     }
 }
