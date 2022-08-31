@@ -15,8 +15,8 @@ import com.github.angryweather.flappybird.entities.Background;
 import com.github.angryweather.flappybird.entities.Ground;
 
 public class MenuScreen implements Screen {
-    OrthographicCamera camera;
-    Viewport viewport;
+//    OrthographicCamera camera;
+//    Viewport viewport;
     final FlappyBird game;
     Texture background;
     Texture ground;
@@ -28,8 +28,8 @@ public class MenuScreen implements Screen {
 
     public MenuScreen(final FlappyBird game) {
         this.game = game;
-        camera = new OrthographicCamera(FlappyBird.WIDTH, FlappyBird.HEIGHT);
-        viewport = new StretchViewport(FlappyBird.WIDTH, FlappyBird.HEIGHT, camera);
+//        camera = new OrthographicCamera(FlappyBird.WIDTH, FlappyBird.HEIGHT);
+//        viewport = new StretchViewport(FlappyBird.WIDTH, FlappyBird.HEIGHT, camera);
         flappy.setText(flappyFont, "Flappy Bird");
         pressEnter.setText(flappyFont, "Press Enter to start");
     }
@@ -56,8 +56,8 @@ public class MenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
+        game.camera.update();
+        game.batch.setProjectionMatrix(game.camera.combined);
         game.batch.begin();
         game.batch.draw(background, -Background.backgroundScroll, 0);
         Background.updateBackgroundScroll(delta);
@@ -68,14 +68,11 @@ public class MenuScreen implements Screen {
         flappyFont.draw(game.batch, pressEnter, flappyFontCenterX - 25, FlappyBird.HEIGHT - 60);
         game.batch.end();
 
-//        if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
-//            game.setScreen(new GameScreen(game));
-//        }
     }
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height, true);
+        game.viewport.update(width, height, true);
     }
 
     @Override
