@@ -6,13 +6,18 @@ import com.github.angryweather.flappybird.FlappyBird;
 
 public class Player {
     public Rectangle flappy = new Rectangle();
-    private Texture bird;
+    public static final int GRAVITY = 20;
+    private float dy = 0f;
 
     public Player(Texture bird) {
-        this.bird = bird;
         flappy.x = 30;
         flappy.y = FlappyBird.HEIGHT / 2f;
         flappy.width = bird.getWidth();
         flappy.height = bird.getHeight();
+    }
+
+    public void update(float delta) {
+        dy += GRAVITY * delta;
+        flappy.y -= dy;
     }
 }
