@@ -39,6 +39,7 @@ public class GameScreen implements Screen {
         Ground.updateGroundScroll(delta);
         game.batch.draw(bird, player.flappy.x, player.flappy.y);
         player.update(delta);
+        player.move();
         game.batch.end();
     }
 
