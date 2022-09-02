@@ -18,4 +18,8 @@ public class Pipe {
         pipeRect.height = pipe.getHeight();
     }
 
+    public void update(float delta) {
+        pipeRect.x = pipeRect.x + PIPE_SCROLL * delta;
+    }
+
 }

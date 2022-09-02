@@ -42,7 +42,9 @@ public class GameScreen implements Screen {
         game.batch.draw(ground, -Ground.groundScroll, 0);
         Ground.updateGroundScroll(delta);
         game.batch.draw(bird, player.flappy.x, player.flappy.y);
+        System.out.println(pipe.pipeRect.x);
         game.batch.draw(pipeTexture, pipe.pipeRect.x, pipe.pipeRect.y);
+        pipe.update(delta);
         player.update(delta);
         player.move();
         game.batch.end();
