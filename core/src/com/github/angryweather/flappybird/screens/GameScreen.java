@@ -57,7 +57,7 @@ public class GameScreen implements Screen {
 
         timer += delta;
         if (timer > 2) {
-            spawnPipes(delta);
+            spawnPipes();
             timer = 0;
         }
         System.out.println("Active: " + activePipes.size);
@@ -76,9 +76,8 @@ public class GameScreen implements Screen {
         game.batch.end();
     }
 
-    private void spawnPipes(float delta) {
+    private void spawnPipes() {
         Pipe pipeItem = pipePool.obtain();
-//        pipeItem.init();
         activePipes.add(pipeItem);
     }
 

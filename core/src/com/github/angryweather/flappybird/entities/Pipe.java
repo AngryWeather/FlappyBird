@@ -2,11 +2,12 @@ package com.github.angryweather.flappybird.entities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Pool;
 import com.github.angryweather.flappybird.FlappyBird;
 
 import java.util.Random;
 
-public class Pipe {
+public class Pipe implements Pool.Poolable{
     public final Rectangle pipeRect = new Rectangle();
     public static final int PIPE_SCROLL = -60;
     final Random random = new Random();
@@ -23,4 +24,10 @@ public class Pipe {
         pipeRect.x = pipeRect.x + PIPE_SCROLL * delta;
     }
 
+    @Override
+    public void reset() {
+        pipeRect.x = FlappyBird.WIDTH;
+        pipeRect.y = random.nextFloat(-350, -300);
+        isAlive = true;
+    }
 }
