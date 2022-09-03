@@ -10,6 +10,8 @@ import com.github.angryweather.flappybird.entities.Ground;
 import com.github.angryweather.flappybird.entities.Pipe;
 import com.github.angryweather.flappybird.entities.Player;
 
+import java.util.Iterator;
+
 public class GameScreen implements Screen {
     private final Array<Pipe> activePipes = new Array<>();
     private final Pool<Pipe> pipePool = new Pool<Pipe>() {
@@ -54,15 +56,21 @@ public class GameScreen implements Screen {
         game.batch.draw(bird, player.flappy.x, player.flappy.y);
 
         timer += delta;
-        System.out.println(timer);
         if (timer > 2) {
             spawnPipes(delta);
             timer = 0;
         }
+        System.out.println("Active: " + activePipes.size);
+        System.out.println("Pool: " + pipePool.getFree());
+
         for (Pipe pipe : activePipes) {
+            if (pipe.pipeRect.x < -pipe.pipeRect.width) {
+                pipe.isAlive = false;
+            }
             game.batch.draw(pipeTexture, pipe.pipeRect.x, pipe.pipeRect.y);
             pipe.update(delta);
         }
+        removePipes();
         player.update(delta);
         player.move();
         game.batch.end();
@@ -72,6 +80,16 @@ public class GameScreen implements Screen {
         Pipe pipeItem = pipePool.obtain();
 //        pipeItem.init();
         activePipes.add(pipeItem);
+    }
+
+    private void removePipes() {
+        for (Iterator<Pipe> it = activePipes.iterator(); it.hasNext(); ) {
+            Pipe pipe = it.next();
+            if (!pipe.isAlive) {
+                it.remove();
+                pipePool.free(pipe);
+            }
+        }
     }
 
     @Override

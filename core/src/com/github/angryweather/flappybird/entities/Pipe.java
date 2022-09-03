@@ -10,6 +10,7 @@ public class Pipe {
     public final Rectangle pipeRect = new Rectangle();
     public static final int PIPE_SCROLL = -60;
     final Random random = new Random();
+    public boolean isAlive = true;
 
     public Pipe(Texture pipe) {
         pipeRect.x = FlappyBird.WIDTH;
