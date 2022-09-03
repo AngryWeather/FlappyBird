@@ -18,6 +18,8 @@ public class GameScreen implements Screen {
             return new Pipe(pipeTexture);
         }
     };
+    float timer = 0;
+
     final FlappyBird game;
     Player player;
     Texture bird;
@@ -50,20 +52,26 @@ public class GameScreen implements Screen {
         game.batch.draw(ground, -Ground.groundScroll, 0);
         Ground.updateGroundScroll(delta);
         game.batch.draw(bird, player.flappy.x, player.flappy.y);
-        spawnPipes();
 
+        timer += delta;
+        System.out.println(timer);
+        if (timer > 2) {
+            spawnPipes(delta);
+            timer = 0;
+        }
+        for (Pipe pipe : activePipes) {
+            game.batch.draw(pipeTexture, pipe.pipeRect.x, pipe.pipeRect.y);
+            pipe.update(delta);
+        }
         player.update(delta);
         player.move();
         game.batch.end();
     }
 
-    private void spawnPipes() {
+    private void spawnPipes(float delta) {
         Pipe pipeItem = pipePool.obtain();
 //        pipeItem.init();
         activePipes.add(pipeItem);
-        for (Pipe pipe : activePipes) {
-            game.batch.draw(pipeTexture, pipe.pipeRect.x, pipe.pipeRect.y);
-        }
     }
 
     @Override
