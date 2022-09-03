@@ -4,32 +4,25 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.github.angryweather.flappybird.FlappyBird;
 import com.github.angryweather.flappybird.entities.Background;
 import com.github.angryweather.flappybird.entities.Ground;
 
 public class MenuScreen implements Screen {
-//    OrthographicCamera camera;
-//    Viewport viewport;
     final FlappyBird game;
     Texture background;
     Texture ground;
-    float flappyFontCenterX = FlappyBird.WIDTH / 2f - 30;
-    float flappyFontY = FlappyBird.HEIGHT - 30;
-    BitmapFont flappyFont = new BitmapFont();
-    GlyphLayout flappy = new GlyphLayout();
-    GlyphLayout pressEnter = new GlyphLayout();
+    final float flappyFontCenterX = FlappyBird.WIDTH / 2f - 30;
+    final float flappyFontY = FlappyBird.HEIGHT - 30;
+    final BitmapFont flappyFont = new BitmapFont();
+    final GlyphLayout flappy = new GlyphLayout();
+    final GlyphLayout pressEnter = new GlyphLayout();
 
     public MenuScreen(final FlappyBird game) {
         this.game = game;
-//        camera = new OrthographicCamera(FlappyBird.WIDTH, FlappyBird.HEIGHT);
-//        viewport = new StretchViewport(FlappyBird.WIDTH, FlappyBird.HEIGHT, camera);
         flappy.setText(flappyFont, "Flappy Bird");
         pressEnter.setText(flappyFont, "Press Enter to start");
     }
@@ -44,10 +37,8 @@ public class MenuScreen implements Screen {
         Gdx.input.setInputProcessor(new InputAdapter() {
             @Override
             public boolean keyDown(int key) {
-                switch (key) {
-                    case Input.Keys.ENTER:
-                        game.setScreen(new GameScreen(game));
-                        break;
+                if (key == Input.Keys.ENTER) {
+                    game.setScreen(new GameScreen(game));
                 }
             return true;
             }

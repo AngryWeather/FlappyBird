@@ -2,6 +2,8 @@ package com.github.angryweather.flappybird.screens;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
 import com.github.angryweather.flappybird.FlappyBird;
 import com.github.angryweather.flappybird.entities.Background;
 import com.github.angryweather.flappybird.entities.Ground;
@@ -9,9 +11,15 @@ import com.github.angryweather.flappybird.entities.Pipe;
 import com.github.angryweather.flappybird.entities.Player;
 
 public class GameScreen implements Screen {
+    private final Array<Pipe> activePipes = new Array<>();
+    private final Pool<Pipe> pipePool = new Pool<Pipe>() {
+        @Override
+        protected Pipe newObject() {
+            return new Pipe(pipeTexture);
+        }
+    };
     final FlappyBird game;
     Player player;
-    Pipe pipe;
     Texture bird;
     Texture background;
     Texture ground;
@@ -31,7 +39,7 @@ public class GameScreen implements Screen {
         ground = game.manager.assets.get(Ground.GROUND_IMAGE, Texture.class);
 
         player = new Player(bird);
-        pipe = new Pipe(pipeTexture);
+//        pipe = new Pipe(pipeTexture);
     }
 
     @Override
@@ -42,12 +50,20 @@ public class GameScreen implements Screen {
         game.batch.draw(ground, -Ground.groundScroll, 0);
         Ground.updateGroundScroll(delta);
         game.batch.draw(bird, player.flappy.x, player.flappy.y);
-        System.out.println(pipe.pipeRect.x);
-        game.batch.draw(pipeTexture, pipe.pipeRect.x, pipe.pipeRect.y);
-        pipe.update(delta);
+        spawnPipes();
+
         player.update(delta);
         player.move();
         game.batch.end();
+    }
+
+    private void spawnPipes() {
+        Pipe pipeItem = pipePool.obtain();
+//        pipeItem.init();
+        activePipes.add(pipeItem);
+        for (Pipe pipe : activePipes) {
+            game.batch.draw(pipeTexture, pipe.pipeRect.x, pipe.pipeRect.y);
+        }
     }
 
     @Override

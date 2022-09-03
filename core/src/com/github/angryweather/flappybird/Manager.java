@@ -4,7 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Manager {
-    public AssetManager assets;
+    public final AssetManager assets;
 
     public Manager() {
         assets = new AssetManager();

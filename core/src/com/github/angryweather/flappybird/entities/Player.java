@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.github.angryweather.flappybird.FlappyBird;
 
 public class Player {
-    public Rectangle flappy = new Rectangle();
+    public final Rectangle flappy = new Rectangle();
     public static final int GRAVITY = 20;
     public static final int ANTIGRAVITY = -5;
     private float dy = 0f;

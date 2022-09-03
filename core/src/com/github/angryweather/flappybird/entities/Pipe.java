@@ -7,9 +7,9 @@ import com.github.angryweather.flappybird.FlappyBird;
 import java.util.Random;
 
 public class Pipe {
-    public Rectangle pipeRect = new Rectangle();
+    public final Rectangle pipeRect = new Rectangle();
     public static final int PIPE_SCROLL = -60;
-    Random random = new Random();
+    final Random random = new Random();
 
     public Pipe(Texture pipe) {
         pipeRect.x = FlappyBird.WIDTH;

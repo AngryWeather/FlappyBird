@@ -3,8 +3,6 @@ package com.github.angryweather.flappybird;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -18,7 +16,7 @@ public class FlappyBird extends Game {
 	public SpriteBatch batch;
 	public OrthographicCamera camera;
 	public Viewport viewport;
-	public Manager manager = new Manager();
+	public final Manager manager = new Manager();
 
 	public void create () {
 		batch = new SpriteBatch();
