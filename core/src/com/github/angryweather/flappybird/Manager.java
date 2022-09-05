@@ -13,5 +13,6 @@ public class Manager {
     public void loadGameScreen() {
         assets.load("assets/bird.png", Texture.class);
         assets.load("assets/pipe.png", Texture.class);
+        assets.finishLoading();
     }
 }

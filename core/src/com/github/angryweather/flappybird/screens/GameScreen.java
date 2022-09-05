@@ -2,32 +2,28 @@ package com.github.angryweather.flappybird.screens;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.github.angryweather.flappybird.FlappyBird;
-import com.github.angryweather.flappybird.entities.Background;
-import com.github.angryweather.flappybird.entities.Ground;
-import com.github.angryweather.flappybird.entities.Pipe;
-import com.github.angryweather.flappybird.entities.Player;
+import com.github.angryweather.flappybird.entities.*;
 
-import java.util.Iterator;
+import java.util.Random;
 
 public class GameScreen implements Screen {
-    private final Array<Pipe> activePipes = new Array<>();
-    private final Pool<Pipe> pipePool = new Pool<Pipe>() {
-        @Override
-        protected Pipe newObject() {
-            return new Pipe(pipeTexture);
-        }
-    };
-    float timer = 0;
-
     final FlappyBird game;
+    private final Array<PipePair> activePipes = new Array<>();
+    float timer = 0;
+    PipePair pipes;
     Player player;
     Texture bird;
     Texture background;
     Texture ground;
     Texture pipeTexture;
+    TextureRegion pipeRegion;
+    TextureRegion flippedPipeRegion;
+    float lastY;
+    Random random = new Random();
 
     public GameScreen(final FlappyBird game) {
         this.game = game;
@@ -36,14 +32,17 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         game.manager.loadGameScreen();
-        game.manager.assets.finishLoading();
         bird = game.manager.assets.get("assets/bird.png");
         pipeTexture = game.manager.assets.get("assets/pipe.png");
         background = game.manager.assets.get(Background.BACKGROUND_IMAGE);
         ground = game.manager.assets.get(Ground.GROUND_IMAGE, Texture.class);
-
+        pipeRegion = new TextureRegion(pipeTexture);
+        flippedPipeRegion = new TextureRegion(pipeTexture);
+        flippedPipeRegion.flip(false, true);
         player = new Player(bird);
-//        pipe = new Pipe(pipeTexture);
+        // value for the gap
+        lastY = -pipeRegion.getRegionHeight() + random.nextFloat(0, 80) + 20;
+        pipes = new PipePair(pipeTexture, lastY);
     }
 
     @Override
@@ -57,39 +56,24 @@ public class GameScreen implements Screen {
 
         timer += delta;
         if (timer > 2) {
-            spawnPipes();
+
+            lastY = Math.max(-pipeRegion.getRegionHeight() + 10,
+                    Math.min(lastY + random.nextFloat(-20, 20), FlappyBird.HEIGHT - 90 -
+                            pipeRegion.getRegionHeight()));
             timer = 0;
         }
-        System.out.println("Active: " + activePipes.size);
-        System.out.println("Pool: " + pipePool.getFree());
 
-        for (Pipe pipe : activePipes) {
-            if (pipe.pipeRect.x < -pipe.pipeRect.width) {
-                pipe.isAlive = false;
-            }
-            game.batch.draw(pipeTexture, pipe.pipeRect.x, pipe.pipeRect.y);
-            pipe.update(delta);
+        for (ObjectMap.Entry<String, Pipe> pipePairs : pipes.pipes) {
+            pipePairs.value.update(delta);
+            game.batch.draw(pipePairs.value.pipe, pipePairs.value.pipeRect.x, pipePairs.value.pipeRect.y);
+
         }
-        removePipes();
+
         player.update(delta);
         player.move();
         game.batch.end();
     }
 
-    private void spawnPipes() {
-        Pipe pipeItem = pipePool.obtain();
-        activePipes.add(pipeItem);
-    }
-
-    private void removePipes() {
-        for (Iterator<Pipe> it = activePipes.iterator(); it.hasNext(); ) {
-            Pipe pipe = it.next();
-            if (!pipe.isAlive) {
-                it.remove();
-                pipePool.free(pipe);
-            }
-        }
-    }
 
     @Override
     public void resize(int width, int height) {
@@ -98,17 +82,15 @@ public class GameScreen implements Screen {
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
+        dispose();
     }
 
     @Override

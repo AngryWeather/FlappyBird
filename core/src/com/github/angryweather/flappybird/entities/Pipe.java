@@ -1,6 +1,7 @@
 package com.github.angryweather.flappybird.entities;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Pool;
 import com.github.angryweather.flappybird.FlappyBird;
@@ -12,12 +13,14 @@ public class Pipe implements Pool.Poolable{
     public static final int PIPE_SCROLL = -60;
     final Random random = new Random();
     public boolean isAlive = true;
+    public TextureRegion pipe;
 
-    public Pipe(Texture pipe) {
+    public Pipe(TextureRegion pipe, float y) {
+        this.pipe = pipe;
         pipeRect.x = FlappyBird.WIDTH;
-        pipeRect.y = random.nextFloat(-350, -300);
-        pipeRect.width = pipe.getWidth();
-        pipeRect.height = pipe.getHeight();
+        pipeRect.y = y;
+        pipeRect.width = pipe.getRegionWidth();
+        pipeRect.height = pipe.getRegionHeight();
     }
 
     public void update(float delta) {
@@ -27,7 +30,7 @@ public class Pipe implements Pool.Poolable{
     @Override
     public void reset() {
         pipeRect.x = FlappyBird.WIDTH;
-        pipeRect.y = random.nextFloat(-350, -300);
+        pipeRect.y = random.nextFloat(-350, -250);
         isAlive = true;
     }
 }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.github.angryweather.flappybird.FlappyBird;
+import com.github.angryweather.flappybird.screens.GameScreen;
 
 public class Player {
     public final Rectangle flappy = new Rectangle();
