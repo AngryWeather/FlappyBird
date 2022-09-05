@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.github.angryweather.flappybird.FlappyBird;
 import com.github.angryweather.flappybird.entities.*;
 
+import java.util.Iterator;
 import java.util.Random;
 
 public class GameScreen implements Screen {
@@ -56,24 +57,36 @@ public class GameScreen implements Screen {
 
         timer += delta;
         if (timer > 2) {
-
             lastY = Math.max(-pipeRegion.getRegionHeight() + 10,
                     Math.min(lastY + random.nextFloat(-20, 20), FlappyBird.HEIGHT - 90 -
                             pipeRegion.getRegionHeight()));
+            activePipes.add(new PipePair(pipeTexture, lastY));
             timer = 0;
         }
 
-        for (ObjectMap.Entry<String, Pipe> pipePairs : pipes.pipes) {
-            pipePairs.value.update(delta);
-            game.batch.draw(pipePairs.value.pipe, pipePairs.value.pipeRect.x, pipePairs.value.pipeRect.y);
-
+        for (PipePair pair : activePipes) {
+            pair.update(delta);
+            System.out.println(pair.isAlive);
+            for (ObjectMap.Entry<String, Pipe> pairs : pair.pipes) {
+                game.batch.draw(pairs.value.pipe, pairs.value.pipeRect.x, pairs.value.pipeRect.y);
+            }
         }
+        System.out.println(activePipes.size);
+        removePairs();
 
         player.update(delta);
         player.move();
         game.batch.end();
     }
 
+    public void removePairs() {
+        for (Iterator<PipePair> it = activePipes.iterator(); it.hasNext(); ) {
+            PipePair pair = it.next();
+            if (!pair.isAlive) {
+                it.remove();
+            }
+        }
+    }
 
     @Override
     public void resize(int width, int height) {
