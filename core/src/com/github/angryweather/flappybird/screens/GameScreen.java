@@ -3,6 +3,7 @@ package com.github.angryweather.flappybird.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -14,6 +15,7 @@ import java.util.Random;
 
 public class GameScreen implements Screen {
     final FlappyBird game;
+    private BitmapFont font = new BitmapFont();
     private final Array<PipePair> activePipes = new Array<>();
     float timer = 0;
     PipePair pipes;
@@ -81,7 +83,7 @@ public class GameScreen implements Screen {
                     }
                 }
             }
-            System.out.println(player.getScore());
+            font.draw(game.batch, "Score: " + player.getScore(), 10, FlappyBird.HEIGHT - 20);
             removePairs();
             player.update(delta);
             player.move();
