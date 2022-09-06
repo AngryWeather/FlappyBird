@@ -1,6 +1,7 @@
 package com.github.angryweather.flappybird.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -74,7 +75,8 @@ public class GameScreen implements Screen {
                 for (ObjectMap.Entry<String, Pipe> pairs : pair.pipes) {
                     game.batch.draw(pairs.value.pipe, pairs.value.pipeRect.x, pairs.value.pipeRect.y);
                     if (player.flappy.overlaps(pairs.value.pipeRect)) {
-                        game.setScreen(new MenuScreen(game));
+                        game.setScreen(new GameOverScreen(game, player.getScore()));
+//                        font.draw(game.batch, "You lost!", FlappyBird.WIDTH / 2f, FlappyBird.HEIGHT / 2f);
                     } else if (!pair.isScored) {
                         if (pair.x + pairs.value.pipeRect.width < player.flappy.x) {
                             player.increaseScore();
