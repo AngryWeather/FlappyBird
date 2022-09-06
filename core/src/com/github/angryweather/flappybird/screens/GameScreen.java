@@ -72,11 +72,16 @@ public class GameScreen implements Screen {
                 for (ObjectMap.Entry<String, Pipe> pairs : pair.pipes) {
                     game.batch.draw(pairs.value.pipe, pairs.value.pipeRect.x, pairs.value.pipeRect.y);
                     if (player.flappy.overlaps(pairs.value.pipeRect)) {
-                        scrolling = false;
-                        Gdx.graphics.setContinuousRendering(false);
+                        game.setScreen(new MenuScreen(game));
+                    } else if (!pair.isScored) {
+                        if (pair.x + pairs.value.pipeRect.width < player.flappy.x) {
+                            player.increaseScore();
+                            pair.isScored = true;
+                        }
                     }
                 }
             }
+            System.out.println(player.getScore());
             removePairs();
             player.update(delta);
             player.move();

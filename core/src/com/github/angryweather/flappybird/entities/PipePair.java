@@ -14,6 +14,7 @@ public class PipePair {
     TextureRegion nonFlipped;
     TextureRegion flipped;
     public boolean isAlive = true;
+    public boolean isScored = false;
 
     public PipePair(Texture pipe, float y) {
         this.y = y;

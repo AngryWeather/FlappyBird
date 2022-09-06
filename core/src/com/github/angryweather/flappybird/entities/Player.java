@@ -10,8 +10,17 @@ import com.github.angryweather.flappybird.screens.GameScreen;
 public class Player {
     public final Rectangle flappy = new Rectangle();
     public static final int GRAVITY = 20;
-    public static final int ANTIGRAVITY = -5;
+    public static final int ANTIGRAVITY = -3;
     private float dy = 0f;
+    private int score = 0;
+
+    public int getScore() {
+        return score;
+    }
+
+    public void increaseScore() {
+        score++;
+    }
 
     public Player(Texture bird) {
         flappy.x = FlappyBird.WIDTH / 2f - (bird.getWidth() / 2f);
