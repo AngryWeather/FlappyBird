@@ -1,5 +1,6 @@
 package com.github.angryweather.flappybird.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -25,6 +26,7 @@ public class GameScreen implements Screen {
     TextureRegion flippedPipeRegion;
     float lastY;
     Random random = new Random();
+    boolean scrolling = true;
 
     public GameScreen(final FlappyBird game) {
         this.game = game;
@@ -48,35 +50,39 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        game.batch.begin();
-        game.batch.draw(background, -Background.backgroundScroll, 0);
-        Background.updateBackgroundScroll(delta);
-        game.batch.draw(ground, -Ground.groundScroll, 0);
-        Ground.updateGroundScroll(delta);
-        game.batch.draw(bird, player.flappy.x, player.flappy.y);
+        if (scrolling) {
+            game.batch.begin();
+            game.batch.draw(background, -Background.backgroundScroll, 0);
+            Background.updateBackgroundScroll(delta);
+            game.batch.draw(ground, -Ground.groundScroll, 0);
+            Ground.updateGroundScroll(delta);
+            game.batch.draw(bird, player.flappy.x, player.flappy.y);
 
-        timer += delta;
-        if (timer > 2) {
-            lastY = Math.max(-pipeRegion.getRegionHeight() + 10,
-                    Math.min(lastY + random.nextFloat(-20, 20), FlappyBird.HEIGHT - 90 -
-                            pipeRegion.getRegionHeight()));
-            activePipes.add(new PipePair(pipeTexture, lastY));
-            timer = 0;
-        }
-
-        for (PipePair pair : activePipes) {
-            pair.update(delta);
-            System.out.println(pair.isAlive);
-            for (ObjectMap.Entry<String, Pipe> pairs : pair.pipes) {
-                game.batch.draw(pairs.value.pipe, pairs.value.pipeRect.x, pairs.value.pipeRect.y);
+            timer += delta;
+            if (timer > 2) {
+                lastY = Math.max(-pipeRegion.getRegionHeight() + 10,
+                        Math.min(lastY + random.nextFloat(-20, 20), FlappyBird.HEIGHT - 90 -
+                                pipeRegion.getRegionHeight()));
+                activePipes.add(new PipePair(pipeTexture, lastY));
+                timer = 0;
             }
-        }
-        System.out.println(activePipes.size);
-        removePairs();
 
-        player.update(delta);
-        player.move();
-        game.batch.end();
+            for (PipePair pair : activePipes) {
+                pair.update(delta);
+                for (ObjectMap.Entry<String, Pipe> pairs : pair.pipes) {
+                    game.batch.draw(pairs.value.pipe, pairs.value.pipeRect.x, pairs.value.pipeRect.y);
+                    if (player.flappy.overlaps(pairs.value.pipeRect)) {
+                        scrolling = false;
+                        Gdx.graphics.setContinuousRendering(false);
+                    }
+                }
+            }
+            removePairs();
+            player.update(delta);
+            player.move();
+            game.batch.end();
+        }
+
     }
 
     public void removePairs() {
